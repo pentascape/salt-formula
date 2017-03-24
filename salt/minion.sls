@@ -13,10 +13,14 @@ salt-minion:
     - exclude_pat: _*
     - context:
         standalone: False
-  service.running:
+  service.enabled:
     - enable: True
     - name: {{ salt_settings.minion_service }}
-    - watch:
+  cmd.wait:
+    - name: 'sleep 5; salt-call --local service.restart salt-minion'
+    - order: last
+    - bg: True
+    - onchanges:
 {% if salt_settings.install_packages %}
       - pkg: salt-minion
 {% endif %}
