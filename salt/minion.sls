@@ -20,7 +20,7 @@ salt-minion:
     - name: 'sleep 5; salt-call --local service.restart salt-minion'
     - order: last
     - bg: True
-    - onchanges:
+    - watch:
 {% if salt_settings.install_packages %}
       - pkg: salt-minion
 {% endif %}
